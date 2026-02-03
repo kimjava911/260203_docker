@@ -14,3 +14,24 @@ jobs:
       # 작동 테스트용
       - name: Logging
         run: echo 'Hello Docker!'
+    
+    # 소스코드를 runner가 읽어야함 (checkout)
+      - name: 소스코드 체크아웃
+        uses: actions/checkout@v6
+      
+    # docker가 ghcr.io로 로그인 (PAT)
+      - name : GHCR 로그인
+        uses : docker/login-action@v3
+        with :
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }} # 내장
+    
+    # 빌드하고 push해줘야함
+      - name : 빌드와 푸시
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository }}:latest
+          # username/repository-name
