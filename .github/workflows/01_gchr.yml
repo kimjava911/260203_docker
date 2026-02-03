@@ -41,7 +41,7 @@ jobs:
 
       # 빌드하고 push해줘야함
       - name: 빌드와 푸시
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
